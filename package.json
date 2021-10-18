@@ -4,7 +4,7 @@
   "description": "Backend do projeto Sobre12",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Poulvilho/sobre12_backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13"
   }
 }
