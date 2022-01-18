@@ -1,11 +1,13 @@
 const {
     login,
-    register
+    register,
+    edit,
 } = require('../controllers/userController');
 
 const router = require('express').Router();
 
-router.post('/login', login);
 router.post('/register', register);
+router.post('/login', login);
+router.post('/:id', edit);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const config = require('../config/database');
 
-const sequelize = new Sequelize(config.database, config.password, config);
+const sequelize = new Sequelize(config.database, config.password, config.username, config);
 
 const User = sequelize.define('User', {
     email: DataTypes.STRING,
