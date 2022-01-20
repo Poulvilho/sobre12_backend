@@ -22,10 +22,12 @@
     "express": "^4.17.1",
     "nodemon": "^2.0.13",
     "pg": "^8.7.1",
+    "pg-hstore": "^2.3.3",
     "sequelize": "^6.7.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "lint": "^1.1.2"
+    "lint": "^1.1.2",
+    "sequelize-cli": "^6.2.0"
   }
 }
