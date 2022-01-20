@@ -30,8 +30,10 @@ async function login(request, response) {
 
     try {
         const user = await User.findOne({
-            email,
-            password,
+            where: {
+                email,
+                password,
+            }
         })
 
         if (!user) {
@@ -54,7 +56,7 @@ async function edit(request, response) {
     const { email, password } = request.body;
 
     try {
-        const user = User.update({
+        const user = await User.update({
             email,
             password,
         }, {
@@ -65,7 +67,10 @@ async function edit(request, response) {
                 message: 'Usuário não encontrado!'
             });
         }
-        return response.status(200).json(user);
+        return response.status(200).json({
+            data:user[0],
+            message:'Usuário atualizado com sucesso!'
+        });
 
     } catch (error) {
         return response.status(500).json(
@@ -79,7 +84,7 @@ async function remove(request, response) {
     const { id } = request.params;
 
     try {
-        const user = User.destroy({
+        const user = await User.destroy({
             where: { id }
         });
         if (user === 0) {
@@ -87,7 +92,10 @@ async function remove(request, response) {
                 message: 'Usuário não encontrado!'
             });
         }
-        return response.status(200).json(user);
+        return response.status(200).json({
+            data:user[0],
+            message:'Usuário apagado com sucesso!'
+        });
 
     } catch (error) {
         return response.status(500).json(
