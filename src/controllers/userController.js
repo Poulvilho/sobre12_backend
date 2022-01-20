@@ -74,8 +74,31 @@ async function edit(request, response) {
     }
 };
 
+async function remove(request, response) {
+
+    const { id } = request.params;
+
+    try {
+        const user = User.destroy({
+            where: { id }
+        });
+        if (user === 0) {
+            return response.status(404).json({
+                message: 'Usuário não encontrado!'
+            });
+        }
+        return response.status(200).json(user);
+
+    } catch (error) {
+        return response.status(500).json(
+            message = error
+        )
+    }
+};
+
 module.exports = {
     login,
     register,
     edit,
+    remove,
 };
