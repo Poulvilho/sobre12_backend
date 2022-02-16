@@ -5,11 +5,12 @@ const User = require('../models/user')
 async function register(request, response) {
 
     const id = uuidv4();
-    const { email, password } = request.body;
+    const { name, email, password } = request.body;
 
     try {
         const user = await User.create({
             id,
+            name,
             email,
             password,
         });
@@ -53,10 +54,11 @@ async function login(request, response) {
 async function edit(request, response) {
 
     const { id } = request.params;
-    const { email, password } = request.body;
+    const { name,email, password } = request.body;
 
     try {
         const user = await User.update({
+            name,
             email,
             password,
         }, {
