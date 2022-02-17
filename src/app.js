@@ -3,6 +3,7 @@ const cors = require('cors');
 
 // Importing routes
 const userRoutes = require('./routes/userRoutes');
+const tripRoutes = require('./routes/tripRoutes');
 
 const application = express();
 
@@ -15,6 +16,7 @@ application.use(cors()); // Development only
 application.use(express.json());
 
 // Routes middleware configuration
-application.use('/api/users', userRoutes);
+application.use('/api/user', userRoutes);
+application.use('/api/trip', tripRoutes);
 
 module.exports = application;

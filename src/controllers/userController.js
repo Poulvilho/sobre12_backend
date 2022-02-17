@@ -35,7 +35,7 @@ async function login(request, response) {
                 email,
                 password,
             }
-        })
+        });
 
         if (!user) {
             return response.status(404).json({
@@ -54,7 +54,7 @@ async function login(request, response) {
 async function edit(request, response) {
 
     const { id } = request.params;
-    const { name,email, password } = request.body;
+    const { name, email, password } = request.body;
 
     try {
         const user = await User.update({
@@ -70,8 +70,8 @@ async function edit(request, response) {
             });
         }
         return response.status(200).json({
-            data:user[0],
-            message:'Usuário atualizado com sucesso!'
+            data: user[0],
+            message: 'Usuário atualizado com sucesso!'
         });
 
     } catch (error) {
@@ -95,8 +95,8 @@ async function remove(request, response) {
             });
         }
         return response.status(200).json({
-            data:user[0],
-            message:'Usuário apagado com sucesso!'
+            data: user[0],
+            message: 'Usuário apagado com sucesso!'
         });
 
     } catch (error) {
