@@ -8,7 +8,7 @@ const {
 
 const router = require('express').Router();
 
-router.get('/index/:id', index);
+router.post('/index/:user', index);
 router.post('/create', create);
 router.get('/:id', read);
 router.put('/:id', edit);
