@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --detectOpenHandles --forceExit --silent --coverage"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "jest": "^27.5.1",
     "lint": "^1.1.2",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "supertest": "^6.2.2"
   }
 }
