@@ -1,6 +1,7 @@
+const { response } = require('express');
 const { v4: uuidv4 } = require('uuid');
 
-const User = require('../models/user')
+const User = require('../models/user');
 
 async function register(request, response) {
 
@@ -15,12 +16,14 @@ async function register(request, response) {
             password,
         });
 
-        return response.status(200).json(
-            user
-        );
+        return response.status(200).json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        });
     } catch (error) {
         return response.status(500).json(
-            message = error
+            message = error,
         );
     }
 };
@@ -31,6 +34,7 @@ async function login(request, response) {
 
     try {
         const user = await User.findOne({
+            attributes: [ 'id', 'name', 'email' ],
             where: {
                 email,
                 password,
@@ -39,17 +43,30 @@ async function login(request, response) {
 
         if (!user) {
             return response.status(404).json({
-                message: 'Usuário não encontrado!'
+                message: 'Usuário não encontrado!',
             });
         }
         return response.status(200).json(user);
 
     } catch (error) {
         return response.status(500).json(
-            message = error
+            message = error,
         );
     }
 };
+
+async function index(request, response) {
+    try {
+        const users = await User.findAll({
+            attributes: [ 'id', 'name', 'email' ],
+        });
+        return response.status(200).json(users);
+    } catch (error) {
+        return response.status(500).json(
+            message = error,
+        )
+    }
+}
 
 async function edit(request, response) {
 
@@ -57,20 +74,20 @@ async function edit(request, response) {
     const { name, email, password } = request.body;
 
     try {
-        const user = await User.update({
+        const rowsUpdated = await User.update({
             name,
             email,
             password,
         }, {
             where: { id }
         });
-        if (user[0] === 0) {
+        if (rowsUpdated[0] === 0) {
             return response.status(404).json({
                 message: 'Usuário não encontrado!'
             });
         }
         return response.status(200).json({
-            data: user[0],
+            data: rowsUpdated[0],
             message: 'Usuário atualizado com sucesso!'
         });
 
@@ -86,16 +103,16 @@ async function remove(request, response) {
     const { id } = request.params;
 
     try {
-        const user = await User.destroy({
+        const rowsUpdated = await User.destroy({
             where: { id }
         });
-        if (user === 0) {
+        if (rowsUpdated === 0) {
             return response.status(404).json({
                 message: 'Usuário não encontrado!'
             });
         }
         return response.status(200).json({
-            data: user[0],
+            data: rowsUpdated[0],
             message: 'Usuário apagado com sucesso!'
         });
 
@@ -107,8 +124,9 @@ async function remove(request, response) {
 };
 
 module.exports = {
-    login,
     register,
+    login,
+    index,
     edit,
     remove,
 };
