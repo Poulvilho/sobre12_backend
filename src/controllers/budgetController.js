@@ -1,24 +1,22 @@
 const { v4: uuidv4 } = require('uuid');
 
-const Trip = require('../models/trip')
+const Budget = require('../models/budget')
 
 async function index(request, response) {
 
-    const { user } = request.params;
+    const { trip } = request.params;
 
     try {
-        const trip = await Trip.findAll({
-            where: {
-                user,
-            }
+        const budget = await Budget.findAll({
+            where: { trip },
         });
 
         return response.status(200).json(
-            trip,
+            budget
         );
     } catch (error) {
         return response.status(500).json(
-            message = error,
+            message = error
         );
     }
 };
@@ -26,20 +24,20 @@ async function index(request, response) {
 async function create(request, response) {
 
     const id = uuidv4();
-    const { name, description, dtstart, dtend, user } = request.body;
+    const { description, value, dtstart, dtend, trip } = request.body;
 
     try {
-        const trip = await Trip.create({
+        const budget = await Budget.create({
             id,
-            name,
             description,
+            value,
             dtstart,
             dtend,
-            user,
+            trip,
         });
 
         return response.status(200).json(
-            trip,
+            budget,
         );
     } catch (error) {
         return response.status(500).json(
@@ -53,14 +51,14 @@ async function read(request, response) {
     const { id } = request.params;
 
     try {
-        const trip = await Trip.findByPk(id);
+        const budget = await Budget.findByPk(id);
 
-        if (!trip) {
+        if (!budget) {
             return response.status(404).json({
                 message: 'Viagem não encontrada!',
             });
         }
-        return response.status(200).json(trip);
+        return response.status(200).json(budget);
 
     } catch (error) {
         return response.status(500).json(
@@ -72,30 +70,30 @@ async function read(request, response) {
 async function edit(request, response) {
 
     const { id } = request.params;
-    const { name, description, dtstart, dtend } = request.body;
+    const { description, value, dtstart, dtend } = request.body;
 
     try {
-        const trip = await Trip.update({
-            name,
+        const budget = await Budget.update({
             description,
+            value,
             dtstart,
             dtend,
         }, {
             where: { id },
         });
-        if (trip[0] === 0) {
+        if (budget[0] === 0) {
             return response.status(404).json({
                 message: 'Viagem não encontrada!',
             });
         }
         return response.status(200).json({
-            data: trip[0],
+            data: budget[0],
             message: 'Viagem atualizada com sucesso!',
         });
 
     } catch (error) {
         return response.status(500).json(
-            message = error,
+            message = error
         )
     }
 };
@@ -105,16 +103,16 @@ async function remove(request, response) {
     const { id } = request.params;
 
     try {
-        const trip = await Trip.destroy({
+        const budget = await Budget.destroy({
             where: { id },
         });
-        if (trip === 0) {
+        if (budget === 0) {
             return response.status(404).json({
                 message: 'Viagem não encontrada!',
             });
         }
         return response.status(200).json({
-            data: trip[0],
+            data: budget[0],
             message: 'Viagem apagada com sucesso!',
         });
 
