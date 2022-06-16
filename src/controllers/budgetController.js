@@ -24,15 +24,14 @@ async function index(request, response) {
 async function create(request, response) {
 
     const id = uuidv4();
-    const { description, value, dtstart, dtend, trip } = request.body;
+    const { description, value, dtbudget, trip } = request.body;
 
     try {
         const budget = await Budget.create({
             id,
             description,
             value,
-            dtstart,
-            dtend,
+            dtbudget,
             trip,
         });
 
@@ -70,14 +69,13 @@ async function read(request, response) {
 async function edit(request, response) {
 
     const { id } = request.params;
-    const { description, value, dtstart, dtend } = request.body;
+    const { description, value, dtbudget } = request.body;
 
     try {
         const budget = await Budget.update({
             description,
             value,
-            dtstart,
-            dtend,
+            dtbudget,
         }, {
             where: { id },
         });

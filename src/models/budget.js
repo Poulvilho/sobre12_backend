@@ -8,8 +8,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 const Budget = sequelize.define('Budget', {
     description: DataTypes.STRING,
     value:DataTypes.DOUBLE,
-    dtstart: DataTypes.DATE,
-    dtend: DataTypes.DATE,
+    dtbudget: DataTypes.DATE,
     trip: DataTypes.STRING
 });
 
