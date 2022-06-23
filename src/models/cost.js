@@ -8,7 +8,8 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 const Cost = sequelize.define('Cost', {
     description: DataTypes.STRING,
-    value:DataTypes.DOUBLE,
+    value: DataTypes.DOUBLE,
+    category: DataTypes.NUMBER,
     dtcost: DataTypes.DATE,
     trip: DataTypes.STRING,
     user: DataTypes.STRING,

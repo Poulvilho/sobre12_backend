@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DOUBLE,
       },
+      category: {
+        allowNull: false,
+        type: Sequelize.NUMBER,
+      },
       dtbudget: {
         allowNull: false,
         type: Sequelize.DATE
