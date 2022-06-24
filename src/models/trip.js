@@ -3,7 +3,9 @@ const config = require('../config/database');
 
 const User = require('./user');
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(
+    config.database, config.username, config.password, config
+);
 
 const Trip = sequelize.define('Trip', {
     name: DataTypes.STRING,

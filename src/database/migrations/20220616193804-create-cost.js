@@ -20,6 +20,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.NUMBER,
       },
+      subcategory: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       dtcost: {
         allowNull: false,
         type: Sequelize.DATE

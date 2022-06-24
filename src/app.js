@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const tripRoutes = require('./routes/tripRoutes');
 const budgetRoutes = require('./routes/budgetRoutes');
 const costRoutes = require('./routes/costRoutes');
+const subcategoryRoutes = require('./routes/subcategoryRoutes');
 
 const application = express();
 
@@ -22,5 +23,6 @@ application.use('/api/user', userRoutes);
 application.use('/api/trip', tripRoutes);
 application.use('/api/budget', budgetRoutes);
 application.use('/api/cost', costRoutes);
+application.use('/api/subcategory', subcategoryRoutes);
 
 module.exports = application;
