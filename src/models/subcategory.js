@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
 
 const Subcategory = sequelize.define('Subcategory', {
     description: DataTypes.STRING,
-    category: DataTypes.NUMBER,
+    category: DataTypes.INTEGER,
     trip: DataTypes.STRING
 });
 

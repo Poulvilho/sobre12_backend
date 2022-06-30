@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
 const Cost = sequelize.define('Cost', {
     description: DataTypes.STRING,
     value: DataTypes.DOUBLE,
-    category: DataTypes.NUMBER,
+    category: DataTypes.INTEGER,
     subcategory: DataTypes.STRING,
     dtcost: DataTypes.DATE,
     trip: DataTypes.STRING,

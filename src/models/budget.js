@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
 const Budget = sequelize.define('Budget', {
     description: DataTypes.STRING,
     value: DataTypes.DOUBLE,
-    category: DataTypes.NUMBER,
+    category: DataTypes.INTEGER,
     subcategory: DataTypes.STRING,
     dtbudget: DataTypes.DATE,
     trip: DataTypes.STRING
