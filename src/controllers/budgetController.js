@@ -24,13 +24,14 @@ async function index(request, response) {
 async function create(request, response) {
 
     const id = uuidv4();
-    const { description, value, dtbudget, trip } = request.body;
+    const { description, value, category, dtbudget, trip } = request.body;
 
     try {
         const budget = await Budget.create({
             id,
             description,
             value,
+            category,
             dtbudget,
             trip,
         });
