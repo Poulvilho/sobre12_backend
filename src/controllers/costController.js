@@ -22,13 +22,14 @@ async function index(request, response) {
 async function create(request, response) {
 
     const id = uuidv4();
-    const { description, value, dtcost, trip, user } = request.body;
+    const { description, value, category, dtcost, trip, user } = request.body;
 
     try {
         const cost = await Cost.create({
             id,
             description,
             value,
+            category,
             dtcost,
             trip,
             user,
