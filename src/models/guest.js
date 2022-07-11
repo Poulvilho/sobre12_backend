@@ -8,14 +8,14 @@ const sequelize = new Sequelize(
     config.database, config.username, config.password, config
 );
 
-const UsersTrip = sequelize.define('UsersTrip', {
+const Guest = sequelize.define('guests', {
     user: DataTypes.STRING,
     trip: DataTypes.STRING,
 });
 
-UsersTrip.removeAttribute('id');
+Guest.removeAttribute('id');
 
-UsersTrip.belongsTo(User, { foreignKey: 'user' });
-UsersTrip.belongsTo(Trip, { foreignKey: 'trip'});
+Guest.belongsTo(User, { foreignKey: 'user' });
+Guest.belongsTo(Trip, { foreignKey: 'trip'});
 
-module.exports = UsersTrip;
+module.exports = Guest;
