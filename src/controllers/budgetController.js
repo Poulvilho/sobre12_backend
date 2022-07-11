@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
-const Budget = require('../models/budget')
+const Budget = require('../models/budget');
 
 async function index(request, response) {
 

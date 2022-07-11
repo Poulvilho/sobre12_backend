@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
-const Subcategory = require('../models/Subcategory')
+const Subcategory = require('../models/Subcategory');
 
 async function index(request, response) {
 

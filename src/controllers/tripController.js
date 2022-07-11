@@ -1,21 +1,26 @@
+const { Sequelize } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
-const Trip = require('../models/trip')
+const Trip = require('../models/trip');
+const UsersTrip = require('../models/usertrip');
 
 async function index(request, response) {
 
     const { user } = request.params;
 
     try {
-        const trip = await Trip.findAll({
-            where: {
-                user,
-            }
+        const sharedTrips = await UsersTrip.findAll({
+            where: { user },
         });
 
-        return response.status(200).json(
-            trip,
-        );
+        const trip = await Trip.findAll({
+            where: Sequelize.or(
+                { user },
+                { id: sharedTrips.map(({trip}) => trip) }
+            ),
+        });
+
+        return response.status(200).json(trip);
     } catch (error) {
         return response.status(500).json(
             message = error,
@@ -121,7 +126,23 @@ async function remove(request, response) {
     } catch (error) {
         return response.status(500).json(
             message = error,
-        )
+        );
+    }
+};
+
+async function addGuest(request, response) {
+
+    const { trip, user } = request.body;
+
+    try {
+        const guest = await UsersTrip.create({ user, trip });
+
+        return response.status(200).json(guest);
+
+    } catch (error) {
+        return response.status(500).json(
+            message = error,
+        );        
     }
 };
 
@@ -131,4 +152,5 @@ module.exports = {
     read,
     edit,
     remove,
+    addGuest,
 };
