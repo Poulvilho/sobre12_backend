@@ -8,6 +8,7 @@ const budgetRoutes = require('./routes/budgetRoutes');
 const costRoutes = require('./routes/costRoutes');
 const subcategoryRoutes = require('./routes/subcategoryRoutes');
 const guestRoutes = require('../src/routes/guestRoutes');
+const debtRoutes = require('../src/routes/debtRoutes');
 
 const application = express();
 
@@ -26,5 +27,6 @@ application.use('/api/budget', budgetRoutes);
 application.use('/api/cost', costRoutes);
 application.use('/api/subcategory', subcategoryRoutes);
 application.use('/api/guest', guestRoutes);
+application.use('/api/debt', debtRoutes);
 
 module.exports = application;

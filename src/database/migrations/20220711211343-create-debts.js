@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('guests', {
+    await queryInterface.createTable('debts', {
       user: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -13,15 +13,23 @@ module.exports = {
           key: 'id'
         }
       },
-      trip: {
+      cost: {
         allowNull: false,
         type: Sequelize.STRING,
         references: {
           model: {
-            tableName: 'trips'
+            tableName: 'costs'
           },
           key: 'id'
         }
+      },
+      value: {
+        allowNull: false,
+        type: Sequelize.DOUBLE
+      },
+      settled: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       created_at: {
         allowNull: false,
@@ -37,7 +45,7 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('guests', {
+    await queryInterface.dropTable('debts', {
       cascade: true,
     });
   }

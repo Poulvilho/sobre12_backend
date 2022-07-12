@@ -19,8 +19,16 @@ const Cost = sequelize.define('Cost', {
     user: DataTypes.STRING,
 });
 
-Cost.hasOne(Subcategory, {foreignKey: 'subcategory'});
+Cost.belongsTo(Subcategory, {foreignKey: 'subcategory'});
 Cost.belongsTo(Trip, { foreignKey: 'trip' });
 Cost.belongsTo(User, { foreignKey: 'user' });
+
+Cost.belongsToMany(User, { 
+    through: 'users_costs', foreignKey: 'cost', as: 'partipant',
+});
+
+User.belongsToMany(Cost, {
+    through: 'users_costs', foreignKey: 'user', as: 'sharedCost',
+});
 
 module.exports = Cost;

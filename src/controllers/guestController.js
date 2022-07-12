@@ -2,19 +2,16 @@ const Guest = require('../models/guest');
 const User = require('../models/user');
 
 async function index(request, response) {
-
+    
     const { trip } = request.params;
-
+    
     try {
         const guests = await Guest.findAll({
             where: { trip },
+            include: [{ model: User }]
         });
 
-        const users = User.findAll({
-            where: { id: guests.map(({user}) => user)}
-        });
-
-        return response.status(200).json(users);
+        return response.status(200).json(guests);
     } catch (error) {
         return response.status(500).json(
             message = error,
@@ -69,8 +66,4 @@ async function remove(request, response) {
     }
 };
 
-module.exports = {
-    index,
-    create,
-    remove,
-};
+module.exports = { index, create, remove };
