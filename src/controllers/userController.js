@@ -2,42 +2,42 @@ const { v4: uuidv4 } = require('uuid');
 
 const User = require('../models/user');
 
-async function register(request, response) {
+async function index(request, response) {
+    try {
+        const users = await User.findAll({
+            attributes: [ 'id', 'name', 'email' ],
+        });
 
+        return response.status(200).json(users);
+    } catch (error) {
+        return response.status(500).json({ message = error });
+    }
+};
+
+async function register(request, response) {
     const id = uuidv4();
     const { name, email, password } = request.body;
 
     try {
         const user = await User.create({
-            id,
-            name,
-            email,
-            password,
+            id, name, email, password,
         });
 
         return response.status(200).json({
-            id: user.id,
-            name: user.name,
-            email: user.email,
+            id: user.id, name: user.name, email: user.email,
         });
     } catch (error) {
-        return response.status(500).json(
-            message = error,
-        );
+        return response.status(500).json({ message = error });
     }
 };
 
 async function login(request, response) {
-
     const { email, password } = request.body;
 
     try {
         const user = await User.findOne({
             attributes: [ 'id', 'name', 'email' ],
-            where: {
-                email,
-                password,
-            }
+            where: { email, password },
         });
 
         if (!user) {
@@ -45,27 +45,12 @@ async function login(request, response) {
                 message: 'Usuário não encontrado!',
             });
         }
+        
         return response.status(200).json(user);
-
     } catch (error) {
-        return response.status(500).json(
-            message = error,
-        );
+        return response.status(500).json({ message = error });
     }
 };
-
-async function index(request, response) {
-    try {
-        const users = await User.findAll({
-            attributes: [ 'id', 'name', 'email' ],
-        });
-        return response.status(200).json(users);
-    } catch (error) {
-        return response.status(500).json(
-            message = error,
-        )
-    }
-}
 
 async function edit(request, response) {
 
@@ -74,26 +59,23 @@ async function edit(request, response) {
 
     try {
         const rowsUpdated = await User.update({
-            name,
-            email,
-            password,
+            name, email, password,
         }, {
-            where: { id }
-        });
-        if (rowsUpdated[0] === 0) {
-            return response.status(404).json({
-                message: 'Usuário não encontrado!'
-            });
-        }
-        return response.status(200).json({
-            data: rowsUpdated[0],
-            message: 'Usuário atualizado com sucesso!'
+            where: { id },
         });
 
+        if (rowsUpdated[0] === 0) {
+            return response.status(404).json({
+                message: 'Usuário não encontrado!',
+            });
+        }
+        
+        return response.status(200).json({
+            data: rowsUpdated[0],
+            message: 'Usuário atualizado com sucesso!',
+        });
     } catch (error) {
-        return response.status(500).json(
-            message = error
-        )
+        return response.status(500).json({ message = error });
     }
 };
 
@@ -103,29 +85,27 @@ async function remove(request, response) {
 
     try {
         const rowsUpdated = await User.destroy({
-            where: { id }
+            where: { id },
         });
         if (rowsUpdated === 0) {
             return response.status(404).json({
-                message: 'Usuário não encontrado!'
+                message: 'Usuário não encontrado!',
             });
         }
+        
         return response.status(200).json({
             data: rowsUpdated[0],
-            message: 'Usuário apagado com sucesso!'
+            message: 'Usuário apagado com sucesso!',
         });
-
     } catch (error) {
-        return response.status(500).json(
-            message = error
-        )
+        return response.status(500).json({ message = error });
     }
 };
 
 module.exports = {
+    index,
     register,
     login,
-    index,
     edit,
     remove,
 };
