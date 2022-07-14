@@ -8,7 +8,8 @@ const sequelize = new Sequelize(
 const User = sequelize.define('User', {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    validated: DataTypes.BOOLEAN,
 });
 
 module.exports = User;

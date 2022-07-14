@@ -112,10 +112,4 @@ async function remove(request, response) {
     }
 };
 
-module.exports = {
-    index,
-    create,
-    read,
-    edit,
-    remove,
-};
+module.exports = { index, create, read, edit, remove };

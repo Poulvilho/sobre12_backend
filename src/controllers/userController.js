@@ -1,6 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
+const { password } = require('../config/database');
 
 const User = require('../models/user');
+
+const sendEmail = require('../services/mailService');
 
 async function index(request, response) {
     try {
@@ -20,11 +23,44 @@ async function register(request, response) {
 
     try {
         const user = await User.create({
-            id, name, email, password,
+            id, name, email, password, validated: false,
         });
+
+        mailOptions = {
+            to: email,
+            subject: 'Confirmação de email Sobre 12',
+            text: 'Teste',
+        };
+
+        sendEmail(mailOptions);
 
         return response.status(200).json({
             id: user.id, name: user.name, email: user.email,
+        });
+    } catch (error) {
+        return response.status(500).json({ message = error });
+    }
+};
+
+async function emailValidation(request, response) {
+    const { id } = request.params;
+
+    try {
+        const rowsUpdated = await User.update({
+            validated: true,
+        }, {
+            where: { id },
+        });
+
+        if (rowsUpdated[0] === 0) {
+            return response.status(404).json({
+                message: 'Usuário não encontrado!',
+            });
+        }
+        
+        return response.status(200).json({
+            data: rowsUpdated[0],
+            message: 'Usuário atualizado com sucesso!',
         });
     } catch (error) {
         return response.status(500).json({ message = error });
@@ -45,6 +81,12 @@ async function login(request, response) {
                 message: 'Usuário não encontrado!',
             });
         }
+
+        if(!user.validated) {
+            return response.status(401).json({
+                message: 'Email não validado!',
+            });
+        }
         
         return response.status(200).json(user);
     } catch (error) {
@@ -52,8 +94,37 @@ async function login(request, response) {
     }
 };
 
-async function edit(request, response) {
+async function forgotPassword(request, response) {
+    const { email } = request.params;
 
+    try {
+        const user = await User.findOne({
+            where: { email },
+        });
+
+        if (!user) {
+            return response.status(404).json({
+                message: 'Usuário não encontrado!',
+            });
+        }
+
+        mailOptions = {
+            to: user.email,
+            subject: 'Recuperação de senha',
+            text: password,
+        };
+
+        sendEmail(mailOptions);
+
+        return response.status(200).json({
+            message: 'Senha enviada para o email solicitado',
+        });
+    } catch (error) {
+        return response.status(500).json({ message = error });
+    }
+};
+
+async function edit(request, response) {
     const { id } = request.params;
     const { name, email, password } = request.body;
 
@@ -69,7 +140,7 @@ async function edit(request, response) {
                 message: 'Usuário não encontrado!',
             });
         }
-        
+
         return response.status(200).json({
             data: rowsUpdated[0],
             message: 'Usuário atualizado com sucesso!',
@@ -103,9 +174,5 @@ async function remove(request, response) {
 };
 
 module.exports = {
-    index,
-    register,
-    login,
-    edit,
-    remove,
+    index, register, emailValidation, login, forgotPassword, edit, remove,
 };
