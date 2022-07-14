@@ -13,7 +13,7 @@ async function index(request, response) {
 
         return response.status(200).json(users);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message : error });
     }
 };
 
@@ -38,7 +38,7 @@ async function register(request, response) {
             id: user.id, name: user.name, email: user.email,
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message : error });
     }
 };
 
@@ -63,7 +63,7 @@ async function emailValidation(request, response) {
             message: 'Usuário atualizado com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message : error });
     }
 };
 
@@ -90,7 +90,7 @@ async function login(request, response) {
         
         return response.status(200).json(user);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message : error });
     }
 };
 
@@ -120,7 +120,7 @@ async function forgotPassword(request, response) {
             message: 'Senha enviada para o email solicitado',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message : error });
     }
 };
 
@@ -146,7 +146,7 @@ async function edit(request, response) {
             message: 'Usuário atualizado com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message : error });
     }
 };
 
@@ -169,7 +169,7 @@ async function remove(request, response) {
             message: 'Usuário apagado com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message : error });
     }
 };
 
