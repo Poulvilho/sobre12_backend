@@ -12,7 +12,7 @@ async function index(request, response) {
 
         return response.status(200).json(subcategories);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -27,7 +27,7 @@ async function create(request, response) {
 
         return response.status(200).json(subcategory);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -45,7 +45,7 @@ async function read(request, response) {
         
         return response.status(200).json(subcategory);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -72,7 +72,7 @@ async function edit(request, response) {
             message: 'Subcategoria atualizada com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -95,7 +95,7 @@ async function remove(request, response) {
             message: 'Subcategoria apagada com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 

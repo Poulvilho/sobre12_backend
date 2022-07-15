@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const { password } = require('../config/database');
+const mailForgotPassword = require('../mails/forgotPassword');
+const mailConfirm = require('../mails/mailConfirm');
 
 const User = require('../models/user');
 
@@ -13,7 +15,7 @@ async function index(request, response) {
 
         return response.status(200).json(users);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -28,8 +30,9 @@ async function register(request, response) {
 
         mailOptions = {
             to: email,
-            subject: 'Confirmação de email Sobre 12',
-            text: 'Teste',
+            subject: 'Confirmação de email - Sobre 12',
+            text: "Utilize uma plataforma que suporte email HTML",
+            html: mailConfirm(id),
         };
 
         sendEmail(mailOptions);
@@ -38,7 +41,7 @@ async function register(request, response) {
             id: user.id, name: user.name, email: user.email,
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -63,7 +66,7 @@ async function emailValidation(request, response) {
             message: 'Usuário atualizado com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -90,7 +93,7 @@ async function login(request, response) {
         
         return response.status(200).json(user);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -111,7 +114,8 @@ async function forgotPassword(request, response) {
         mailOptions = {
             to: user.email,
             subject: 'Recuperação de senha',
-            text: password,
+            text: "Utilize uma plataforma que suporte email HTML",
+            html: mailForgotPassword(user.password),
         };
 
         sendEmail(mailOptions);
@@ -120,7 +124,7 @@ async function forgotPassword(request, response) {
             message: 'Senha enviada para o email solicitado',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -146,7 +150,7 @@ async function edit(request, response) {
             message: 'Usuário atualizado com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -169,7 +173,7 @@ async function remove(request, response) {
             message: 'Usuário apagado com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 

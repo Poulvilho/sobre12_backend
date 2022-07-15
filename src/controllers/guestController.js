@@ -12,7 +12,7 @@ async function index(request, response) {
 
         return response.status(200).json(guests);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 

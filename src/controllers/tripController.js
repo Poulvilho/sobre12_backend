@@ -21,7 +21,7 @@ async function index(request, response) {
 
         return response.status(200).json(trip);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -41,7 +41,7 @@ async function create(request, response) {
 
         return response.status(200).json(trip);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -59,7 +59,7 @@ async function read(request, response) {
         
         return response.status(200).json(trip);
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -85,7 +85,7 @@ async function edit(request, response) {
             message: 'Viagem atualizada com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
@@ -108,7 +108,7 @@ async function remove(request, response) {
             message: 'Viagem apagada com sucesso!',
         });
     } catch (error) {
-        return response.status(500).json({ message = error });
+        return response.status(500).json({ message: error });
     }
 };
 
