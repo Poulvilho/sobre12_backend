@@ -19,6 +19,6 @@ const sendEmail = (mailOptions) => {
       console.log('Email sent: ' + info.response);
     }
   })
-}
+};
 
 module.exports = sendEmail;
