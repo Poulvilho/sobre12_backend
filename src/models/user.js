@@ -10,6 +10,8 @@ const User = sequelize.define('User', {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     validated: DataTypes.BOOLEAN,
+}, {
+    defaultScope: { attributes: { exclude: [ 'password' ] } },      
 });
 
 module.exports = User;

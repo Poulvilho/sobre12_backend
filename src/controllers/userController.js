@@ -9,9 +9,7 @@ const sendEmail = require('../services/mailService');
 
 async function index(request, response) {
     try {
-        const users = await User.findAll({
-            attributes: [ 'id', 'name', 'email' ],
-        });
+        const users = await User.findAll();
 
         return response.status(200).json(users);
     } catch (error) {
@@ -35,10 +33,10 @@ async function register(request, response) {
             html: mailConfirm(id),
         };
 
-        sendEmail(mailOptions);
+        //sendEmail(mailOptions);
 
         return response.status(200).json({
-            id: user.id, name: user.name, email: user.email,
+            message: 'Confirme a criação da conta pelo email!',
         });
     } catch (error) {
         return response.status(500).json({ message: error });
@@ -75,7 +73,6 @@ async function login(request, response) {
 
     try {
         const user = await User.findOne({
-            attributes: [ 'id', 'name', 'email' ],
             where: { email, password },
         });
 
@@ -102,6 +99,7 @@ async function forgotPassword(request, response) {
 
     try {
         const user = await User.findOne({
+            attributes: [ 'password' ],
             where: { email },
         });
 
@@ -118,7 +116,7 @@ async function forgotPassword(request, response) {
             html: mailForgotPassword(user.password),
         };
 
-        sendEmail(mailOptions);
+        // sendEmail(mailOptions);
 
         return response.status(200).json({
             message: 'Senha enviada para o email solicitado',
