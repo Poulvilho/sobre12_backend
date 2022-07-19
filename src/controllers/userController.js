@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { password } = require('../config/database');
+
 const mailForgotPassword = require('../mails/forgotPassword');
 const mailConfirm = require('../mails/mailConfirm');
 
@@ -95,7 +95,7 @@ async function login(request, response) {
 };
 
 async function forgotPassword(request, response) {
-    const { email } = request.params;
+    const { email } = request.body;
 
     try {
         const user = await User.findOne({

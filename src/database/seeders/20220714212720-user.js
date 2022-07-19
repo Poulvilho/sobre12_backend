@@ -11,7 +11,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 'c3cdc164-d3f3-4ba1-ae98-a2c28eab45ed',
+        id: '12c06dd6-187a-4a50-927f-5d08b367ee89',
         name: 'João Pedro Mota Jardim',
         email: 'jpmota.unb@gmail.com',
         password: '#Joao123',
