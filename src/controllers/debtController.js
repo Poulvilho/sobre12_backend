@@ -76,7 +76,9 @@ async function remove(request, response) {
     const { cost, user } = request.params;
 
     try {
-        const debt = await Debt.destroy({ where: { cost, user } });
+        const debt = await Debt.destroy({
+            where: { cost, user },
+        });
 
         if (debt[0] === 0) {
             return response.status(404).json({

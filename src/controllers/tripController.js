@@ -2,12 +2,12 @@ const { Sequelize } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
 const Trip = require('../models/trip');
+const Guest = require('../models/guest');
 
 async function index(request, response) {
     const { user } = request.params;
     
     try {
-        const Guest = require('../models/guest');
         const sharedTrips = await Guest.findAll({
             where: { user },
         });
@@ -15,7 +15,7 @@ async function index(request, response) {
         const trip = await Trip.findAll({
             where: Sequelize.or(
                 { user },
-                { id: sharedTrips.map(({trip}) => trip) }
+                { id: sharedTrips.map(({ trip }) => trip) },
             ),
         });
 
@@ -31,12 +31,7 @@ async function create(request, response) {
 
     try {
         const trip = await Trip.create({
-            id,
-            name,
-            description,
-            dtstart,
-            dtend,
-            user,
+            id, name, description, dtstart, dtend, user,
         });
 
         return response.status(200).json(trip);

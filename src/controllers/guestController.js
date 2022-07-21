@@ -45,7 +45,9 @@ async function remove(request, response) {
     const { trip, user } = request.params;
 
     try {
-        const guest = await Guest.destroy({ user, trip });
+        const guest = await Guest.destroy({
+            where: { user, trip },
+        });
 
         if (guest === 0) {
             return response.status(404).json({

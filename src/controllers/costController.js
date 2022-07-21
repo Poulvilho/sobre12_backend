@@ -89,13 +89,13 @@ async function edit(request, response) {
 
     try {
         const debts = await Debt.findAll({
-            where: { cost: id, settled: true }
+            where: { cost: id, settled: true },
         });
 
         if (debts !== null) {
             return response.status(406).json({
                 debts,
-                message: 'Custo possui dívidas já pagas!',
+                message: 'Custo possui dívidas já pagas e não pode ser alterado!',
             })
         }
 
@@ -141,7 +141,7 @@ async function remove(request, response) {
 
     try {
         const debts = await Debt.findAll({
-            where: { cost: id, settled: true }
+            where: { cost: id, settled: true },
         });
 
         if (debts !== null) {
@@ -151,8 +151,12 @@ async function remove(request, response) {
             })
         }
 
-        await Debt.destroy({ where: { cost: id }});
-        const cost = await Cost.destroy({ where: { id } });
+        await Debt.destroy({
+            where: { cost: id },
+        });
+        const cost = await Cost.destroy({
+            where: { id },
+        });
 
         if (cost === 0) {
             return response.status(404).json({

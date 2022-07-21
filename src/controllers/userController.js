@@ -13,6 +13,7 @@ async function index(request, response) {
 
         return response.status(200).json(users);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -27,7 +28,7 @@ async function register(request, response) {
         });
 
         mailOptions = {
-            to: email,
+            to: user.email,
             subject: 'Confirmação de email - Sobre 12',
             text: "Utilize uma plataforma que suporte email HTML",
             html: mailConfirm(id),
@@ -39,18 +40,19 @@ async function register(request, response) {
             message: 'Confirme a criação da conta pelo email!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
 
 async function emailValidation(request, response) {
-    const { id } = request.params;
+    const { email } = request.body;
 
     try {
         const rowsUpdated = await User.update({
             validated: true,
         }, {
-            where: { id },
+            where: { email },
         });
 
         if (rowsUpdated[0] === 0) {
@@ -61,9 +63,10 @@ async function emailValidation(request, response) {
         
         return response.status(200).json({
             data: rowsUpdated[0],
-            message: 'Usuário atualizado com sucesso!',
+            message: 'Usuário validado com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -90,6 +93,7 @@ async function login(request, response) {
         
         return response.status(200).json(user);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -119,9 +123,10 @@ async function forgotPassword(request, response) {
         // sendEmail(mailOptions);
 
         return response.status(200).json({
-            message: 'Senha enviada para o email solicitado',
+            message: 'Senha enviada para o email solicitado!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -148,18 +153,19 @@ async function edit(request, response) {
             message: 'Usuário atualizado com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
 
 async function remove(request, response) {
-
     const { id } = request.params;
 
     try {
         const rowsUpdated = await User.destroy({
             where: { id },
         });
+
         if (rowsUpdated === 0) {
             return response.status(404).json({
                 message: 'Usuário não encontrado!',
@@ -171,6 +177,7 @@ async function remove(request, response) {
             message: 'Usuário apagado com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };

@@ -12,7 +12,7 @@ const router = require('express').Router();
 
 router.get('/index', index);
 router.post('/register', register);
-router.post('/emailValidation/:id', emailValidation);
+router.post('/emailValidation', emailValidation);
 router.post('/forgotPassword', forgotPassword);
 router.post('/login', login);
 router.put('/:id', edit);
