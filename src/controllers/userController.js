@@ -173,7 +173,7 @@ async function remove(request, response) {
         }
         
         return response.status(200).json({
-            data: rowsUpdated[0],
+            data: rowsUpdated,
             message: 'Usuário apagado com sucesso!',
         });
     } catch (error) {

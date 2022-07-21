@@ -12,15 +12,16 @@ async function index(request, response) {
             where: { user },
         });
 
-        const trip = await Trip.findAll({
+        const trips = await Trip.findAll({
             where: Sequelize.or(
                 { user },
                 { id: sharedTrips.map(({ trip }) => trip) },
             ),
         });
 
-        return response.status(200).json(trip);
+        return response.status(200).json(trips);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -36,6 +37,7 @@ async function create(request, response) {
 
         return response.status(200).json(trip);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -54,6 +56,7 @@ async function read(request, response) {
         
         return response.status(200).json(trip);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -80,6 +83,7 @@ async function edit(request, response) {
             message: 'Viagem atualizada com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -99,10 +103,11 @@ async function remove(request, response) {
         }
         
         return response.status(200).json({
-            data: trip[0],
+            data: trip,
             message: 'Viagem apagada com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };

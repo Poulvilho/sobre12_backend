@@ -1,6 +1,8 @@
 const request = require('supertest');
 const app = require('../src/app');
 
+var idCreatedUser = '';
+
 describe('User tests', () => {
   it('Teste Index correto', async () => {
     const response = await request(app)
@@ -19,7 +21,8 @@ describe('User tests', () => {
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Confirme a criação da conta pelo email!');
+    expect(response.body.message)
+      .toBe('Confirme a criação da conta pelo email!');
   });
   
   it('Teste Login errado', async () => {
@@ -78,6 +81,7 @@ describe('User tests', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('id');
+    idCreatedUser = response.body.id;
   });
   
   it('Teste Esqueci minha senha errado', async () => {
@@ -103,15 +107,8 @@ describe('User tests', () => {
   });
   
   it('Teste Edita errado', async () => {
-    const response1 = await request(app)
-      .post('/api/user/login')
-      .send({
-          email: 'teste@teste.com',
-          password: '#Teste123',
-      });
-
     const response2 = await request(app)
-      .put(`/api/user/${response1.body.id}Errado`)
+      .put(`/api/user/${idCreatedUser}Errado`)
       .send({
         name: 'Teste Atualizado',
         email: 'teste@teste.com',
@@ -123,15 +120,8 @@ describe('User tests', () => {
   });
   
   it('Teste Edita correto', async () => {
-    const response1 = await request(app)
-      .post('/api/user/login')
-      .send({
-          email: 'teste@teste.com',
-          password: '#Teste123',
-      });
-
     const response2 = await request(app)
-      .put(`/api/user/${response1.body.id}`)
+      .put(`/api/user/${idCreatedUser}`)
       .send({
         name: 'Teste Atualizado',
         email: 'teste@teste.com',
@@ -143,32 +133,18 @@ describe('User tests', () => {
   });
   
   it('Teste Deleta errado', async () => {
-    const response1 = await request(app)
-      .post('/api/user/login')
-      .send({
-          email: 'teste@teste.com',
-          password: '#Teste123',
-      });
-
     const response2 = await request(app)
-      .delete(`/api/user/${response1.body.id}Errado`);
+      .delete(`/api/user/${idCreatedUser}Errado`);
 
     expect(response2.status).toBe(404);
     expect(response2.body.message).toBe('Usuário não encontrado!');
   });
   
   it('Teste Deleta correto', async () => {
-    const response1 = await request(app)
-      .post('/api/user/login')
-      .send({
-          email: 'teste@teste.com',
-          password: '#Teste123',
-      });
-
     const response2 = await request(app)
-      .delete(`/api/user/${response1.body.id}`);
+      .delete(`/api/user/${idCreatedUser}`);
 
     expect(response2.status).toBe(200);
-    expect(response2.body.message).toBe('Usuário apagado com sucesso!');
+    expect(response2.body.data).toBe(1);
   });
 });
