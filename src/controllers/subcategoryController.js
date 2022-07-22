@@ -12,6 +12,7 @@ async function index(request, response) {
 
         return response.status(200).json(subcategories);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -27,6 +28,7 @@ async function create(request, response) {
 
         return response.status(200).json(subcategory);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -45,6 +47,7 @@ async function read(request, response) {
         
         return response.status(200).json(subcategory);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -72,6 +75,7 @@ async function edit(request, response) {
             message: 'Subcategoria atualizada com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -91,10 +95,11 @@ async function remove(request, response) {
         }
         
         return response.status(200).json({
-            data: subcategory[0],
+            data: subcategory,
             message: 'Subcategoria apagada com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
