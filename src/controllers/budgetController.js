@@ -12,6 +12,7 @@ async function index(request, response) {
 
         return response.status(200).json(budget);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -27,6 +28,7 @@ async function create(request, response) {
 
         return response.status(200).json(budget);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -45,6 +47,7 @@ async function read(request, response) {
         
         return response.status(200).json(budget);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -74,6 +77,7 @@ async function edit(request, response) {
         });
 
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -93,10 +97,11 @@ async function remove(request, response) {
         }
 
         return response.status(200).json({
-            data: budget[0],
+            data: budget,
             message: 'Orçamento apagado com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
