@@ -13,6 +13,7 @@ async function index(request, response) {
 
         return response.status(200).json(cost);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -55,6 +56,7 @@ async function create(request, response) {
 
         return response.status(200).json(cost);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -77,6 +79,7 @@ async function read(request, response) {
 
         return response.status(200).json({ cost: cost, debts: debts });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -88,11 +91,19 @@ async function edit(request, response) {
     } = request.body;
 
     try {
+        const cost = await Cost.findByPk(id);
+        
+        if (!cost) {
+            return response.status(404).json({
+                message: 'Custo não encontrado!',
+            });
+        }
+
         const debts = await Debt.findAll({
             where: { cost: id, settled: true },
         });
 
-        if (debts !== null) {
+        if (debts.length > 0) {
             return response.status(406).json({
                 debts,
                 message: 'Custo possui dívidas já pagas e não pode ser alterado!',
@@ -100,7 +111,8 @@ async function edit(request, response) {
         }
 
         await Debt.destroy({ where: { cost: id }});
-        const cost = await Cost.update({
+
+        const updatedCost = await Cost.update({
             description,
             value,
             category,
@@ -109,29 +121,24 @@ async function edit(request, response) {
         }, {
             where: { id },
         });
-        
-        if (cost[0] === 0) {
-            return response.status(404).json({
-                message: 'Custo não encontrado!',
-            });
-        }
 
         if (participants.length > 0) {
             participants.forEach(async (participant) => {
                 await Debt.create({
                     user: participant,
-                    cost: cost.id,
-                    value: cost.value / (participants.length + 1),
+                    cost: id,
+                    value: value / (participants.length + 1),
                     settled: false,
                 });
             });
         }
 
         return response.status(200).json({
-            data: cost[0],
+            data: updatedCost[0],
             message: 'Custo atualizado com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -140,11 +147,19 @@ async function remove(request, response) {
     const { id } = request.params;
 
     try {
+        const cost = await Cost.findByPk(id);
+        
+        if (!cost) {
+            return response.status(404).json({
+                message: 'Custo não encontrado!',
+            });
+        }
+
         const debts = await Debt.findAll({
             where: { cost: id, settled: true },
         });
 
-        if (debts !== null) {
+        if (debts.length > 0) {
             return response.status(406).json({
                 debts,
                 message: 'Custo possui dívidas já pagas!',
@@ -154,21 +169,16 @@ async function remove(request, response) {
         await Debt.destroy({
             where: { cost: id },
         });
-        const cost = await Cost.destroy({
+        const deletedCost = await Cost.destroy({
             where: { id },
         });
-
-        if (cost === 0) {
-            return response.status(404).json({
-                message: 'Custo não encontrado!',
-            });
-        }
         
         return response.status(200).json({
-            data: cost[0],
+            data: deletedCost,
             message: 'Custo apagado com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
