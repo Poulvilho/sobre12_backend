@@ -12,6 +12,7 @@ async function index(request, response) {
 
         return response.status(200).json(guests);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -35,8 +36,9 @@ async function create(request, response) {
             trip,
         });
 
-        return response.status(200).json({guest});
+        return response.status(200).json(guest);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -56,10 +58,11 @@ async function remove(request, response) {
         }
 
         return response.status(200).json({
-            data: guest[0],
+            data: guest,
             message: 'Participante apagado com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };

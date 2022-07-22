@@ -19,6 +19,15 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        id: '841de1bf-f49c-455b-9f30-ce79fb8f2306',
+        name: 'Usuário Mockado',
+        email: 'mockado@gmail.com',
+        password: '#Mockado123',
+        validated: true,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ], {});
   },
 
