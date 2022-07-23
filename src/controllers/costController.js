@@ -107,7 +107,7 @@ async function edit(request, response) {
             return response.status(406).json({
                 debts,
                 message: 'Custo possui dívidas já pagas e não pode ser alterado!',
-            })
+            });
         }
 
         await Debt.destroy({ where: { cost: id }});
@@ -162,7 +162,7 @@ async function remove(request, response) {
         if (debts.length > 0) {
             return response.status(406).json({
                 debts,
-                message: 'Custo possui dívidas já pagas!',
+                message: 'Custo possui dívidas já pagas e não pode ser deletado!',
             })
         }
 

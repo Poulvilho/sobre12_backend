@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('budgets', {
+    await queryInterface.createTable('costs', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -23,8 +23,14 @@ module.exports = {
       subcategory: {
         allowNull: true,
         type: Sequelize.STRING,
+        references: {
+          model: {
+            tableName: 'subcategories'
+          },
+          key: 'id'
+        }
       },
-      dtbudget: {
+      dtcost: {
         allowNull: false,
         type: Sequelize.DATE
       },
@@ -34,6 +40,16 @@ module.exports = {
         references: {
           model: {
             tableName: 'trips'
+          },
+          key: 'id'
+        }
+      },
+      user: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        references: {
+          model: {
+            tableName: 'users'
           },
           key: 'id'
         }
@@ -52,7 +68,7 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('budgets', {
+    await queryInterface.dropTable('costs', {
       cascade: true,
     });
   }

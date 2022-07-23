@@ -1,12 +1,14 @@
 const request = require('supertest');
 const app = require('../src/app');
 
+const seedTripId = '3bd7c190-ce64-4827-8c0c-58cfef45ad9f';
+
 var idCreatedSubcategory = '';
 
 describe('Subcategory tests', () => {
   it('Teste Index correto', async () => {
     const response = await request(app)
-      .post('/api/subcategory/index/3bd7c190-ce64-4827-8c0c-58cfef45ad9f');
+      .post(`/api/subcategory/index/${seedTripId}`);
 
     expect(response.status).toBe(200);
   });
@@ -17,7 +19,7 @@ describe('Subcategory tests', () => {
       .send({
           description: 'Subcategoria de teste',
           category: 1,
-          trip: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
+          trip: seedTripId,
       });
 
       expect(response.status).toBe(200);
@@ -47,7 +49,7 @@ describe('Subcategory tests', () => {
       .send({
         description: 'Subcategoria de teste Atualizado',
         category: 1,
-        trip: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
+        trip: seedTripId,
       });
 
       expect(response.status).toBe(404);
@@ -60,7 +62,7 @@ describe('Subcategory tests', () => {
       .send({
         description: 'Subcategoria de teste Atualizado',
         category: 1,
-        trip: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
+        trip: seedTripId,
       });
 
       expect(response.status).toBe(200);

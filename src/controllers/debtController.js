@@ -12,6 +12,7 @@ async function myDebts(request, response) {
 
         return response.status(200).json(debt);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -27,6 +28,7 @@ async function myCredits(request, response) {
 
         return response.status(200).json(credits);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -37,18 +39,24 @@ async function read(request, response) {
     try {
         const debt = await Debt.findOne({
             where: { cost, user },
-            include: [{ model: Cost }],
         });
+
+        if (!debt) {
+            return response.status(404).json({
+                message: 'Dívida não encontrada!',
+            });
+        }
 
         return response.status(200).json(debt);
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
 
 async function edit(request, response) {
     const { cost, user } = request.params;
-    const { value, settled } = request.params;
+    const { value, settled } = request.body;
 
     try {
         const debt = await Debt.update({
@@ -68,6 +76,7 @@ async function edit(request, response) {
             message: 'Dívida atualizada com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };
@@ -80,17 +89,18 @@ async function remove(request, response) {
             where: { cost, user },
         });
 
-        if (debt[0] === 0) {
+        if (debt === 0) {
             return response.status(404).json({
                 message: 'Dívida não encontrada!',
             });
         }
 
         return response.status(200).json({
-            data: debt[0],
+            data: debt,
             message: 'Dívida apagada com sucesso!',
         });
     } catch (error) {
+        /* istanbul ignore next */
         return response.status(500).json({ message: error });
     }
 };

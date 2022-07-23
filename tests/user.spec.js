@@ -103,7 +103,8 @@ describe('User tests', () => {
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Senha enviada para o email solicitado!');
+    expect(response.body.message)
+      .toBe('Senha enviada para o email solicitado!');
   });
   
   it('Teste Edita errado', async () => {

@@ -1,6 +1,10 @@
 const request = require('supertest');
 const app = require('../src/app');
 
+const seedUserId = '79ce51ad-1e5a-43b9-b71f-56cfe18d2253';
+const seedTripId = '3bd7c190-ce64-4827-8c0c-58cfef45ad9f';
+const seedDebtUserId = '12c06dd6-187a-4a50-927f-5d08b367ee89';
+
 var idCreatedCost = '';
 
 describe('Cost tests', () => {
@@ -13,9 +17,9 @@ describe('Cost tests', () => {
           category: 1,
           subcategory: null,
           dtcost: new Date(),
-          trip: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
-          user: '79ce51ad-1e5a-43b9-b71f-56cfe18d2253',
-          participants: ['12c06dd6-187a-4a50-927f-5d08b367ee89'],
+          trip: seedTripId,
+          user: seedUserId,
+          participants: [seedDebtUserId],
       });
 
       expect(response.status).toBe(200);
@@ -25,7 +29,7 @@ describe('Cost tests', () => {
 
   it('Teste Index correto', async () => {
     const response = await request(app)
-      .post('/api/cost/index/3bd7c190-ce64-4827-8c0c-58cfef45ad9f/79ce51ad-1e5a-43b9-b71f-56cfe18d2253');
+      .post(`/api/cost/index/${seedTripId}/${seedUserId}`);
 
     expect(response.status).toBe(200);
   });
@@ -55,9 +59,9 @@ describe('Cost tests', () => {
         category: 1,
         subcategory: null,
         dtcost: new Date(),
-        trip: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
-        user: '79ce51ad-1e5a-43b9-b71f-56cfe18d2253',
-        participants: ['12c06dd6-187a-4a50-927f-5d08b367ee89'],
+        trip: seedTripId,
+        user: seedUserId,
+        participants: [seedDebtUserId],
       });
 
       expect(response.status).toBe(404);
@@ -73,9 +77,9 @@ describe('Cost tests', () => {
         category: 1,
         subcategory: null,
         dtcost: new Date(),
-        trip: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
-        user: '79ce51ad-1e5a-43b9-b71f-56cfe18d2253',
-        participants: ['12c06dd6-187a-4a50-927f-5d08b367ee89'],
+        trip: seedTripId,
+        user: seedUserId,
+        participants: [seedDebtUserId],
       });
 
       expect(response.status).toBe(200);
