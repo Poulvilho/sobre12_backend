@@ -4,7 +4,7 @@
   "description": "Backend do projeto Sobre12",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "node src/index.js",
     "pretest": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "test": "jest --detectOpenHandles --forceExit --silent --coverage",
     "posttest": "sequelize db:migrate:undo:all"
