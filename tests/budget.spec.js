@@ -29,6 +29,17 @@ describe('Budget tests', () => {
       idCreatedBudget = response.body.id;
   });
 
+  it('Teste Orçamento diário correto', async () => {
+    const response = await request(app)
+      .post(`/api/budget/dailyBudget`)
+      .send({
+        trip: seedTripId,
+        dtbudget: new Date(),
+      });
+
+    expect(response.status).toBe(200);
+  });
+
   it('Teste Leitura errado', async () => {
     const response = await request(app)
       .get(`/api/budget/${idCreatedBudget}Errado`);

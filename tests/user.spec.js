@@ -108,44 +108,74 @@ describe('User tests', () => {
   });
   
   it('Teste Edita errado', async () => {
-    const response2 = await request(app)
+    const response = await request(app)
       .put(`/api/user/${idCreatedUser}Errado`)
       .send({
         name: 'Teste Atualizado',
         email: 'teste@teste.com',
-        password: '#Teste123',
+        oldPassword: '#Teste123',
+        password: '',
       });
 
-    expect(response2.status).toBe(404);
-    expect(response2.body.message).toBe('Usuário não encontrado!');
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Usuário não encontrado!');
   });
   
-  it('Teste Edita correto', async () => {
-    const response2 = await request(app)
+  it('Teste Edita senha errado', async () => {
+    const response = await request(app)
       .put(`/api/user/${idCreatedUser}`)
       .send({
         name: 'Teste Atualizado',
         email: 'teste@teste.com',
-        password: '#Teste123',
+        oldPassword: '#Teste123errado',
+        password: '',
       });
 
-    expect(response2.status).toBe(200);
-    expect(response2.body.data).toBe(1);
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Usuário não encontrado!');
+  });
+  
+  it('Teste Edita correto', async () => {
+    const response = await request(app)
+      .put(`/api/user/${idCreatedUser}`)
+      .send({
+        name: 'Teste Atualizado',
+        email: 'teste@teste.com',
+        oldPassword: '#Teste123',
+        password: '',
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toBe(1);
+  });
+  
+  it('Teste Edita senha correto', async () => {
+    const response = await request(app)
+      .put(`/api/user/${idCreatedUser}`)
+      .send({
+        name: 'Teste Atualizado',
+        email: 'teste@teste.com',
+        oldPassword: '#Teste123',
+        password: '#Teste1234',
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toBe(1);
   });
   
   it('Teste Deleta errado', async () => {
-    const response2 = await request(app)
+    const response = await request(app)
       .delete(`/api/user/${idCreatedUser}Errado`);
 
-    expect(response2.status).toBe(404);
-    expect(response2.body.message).toBe('Usuário não encontrado!');
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Usuário não encontrado!');
   });
   
   it('Teste Deleta correto', async () => {
-    const response2 = await request(app)
+    const response = await request(app)
       .delete(`/api/user/${idCreatedUser}`);
 
-    expect(response2.status).toBe(200);
-    expect(response2.body.data).toBe(1);
+    expect(response.status).toBe(200);
+    expect(response.body.data).toBe(1);
   });
 });

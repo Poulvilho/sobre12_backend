@@ -34,6 +34,18 @@ describe('Cost tests', () => {
     expect(response.status).toBe(200);
   });
 
+  it('Teste Custo diário correto', async () => {
+    const response = await request(app)
+      .post(`/api/cost/dailyCost`)
+      .send({
+        trip: seedTripId,
+        user: seedUserId,
+        dtcost: new Date(),
+      });
+
+    expect(response.status).toBe(200);
+  });
+
   it('Teste Leitura errado', async () => {
     const response = await request(app)
       .get(`/api/cost/${idCreatedCost}Errado`);

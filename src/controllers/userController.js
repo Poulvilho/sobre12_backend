@@ -133,13 +133,12 @@ async function forgotPassword(request, response) {
 
 async function edit(request, response) {
     const { id } = request.params;
-    const { name, email, password } = request.body;
+    const { name, email, oldPassword, password } = request.body;
 
     try {
-        const rowsUpdated = await User.update({
-            name, email, password,
-        }, {
-            where: { id },
+        const rowsUpdated = await User.update(password !== ''
+            ? { name, password } : { name }, {
+            where: { id, email, password: oldPassword },
         });
 
         if (rowsUpdated[0] === 0) {

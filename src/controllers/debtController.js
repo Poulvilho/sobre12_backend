@@ -6,11 +6,11 @@ async function myDebts(request, response) {
 
     try {
         const costs = await Cost.findAll({ where: { trip }});
-        const debt = await Debt.findAll({
+        const debts = await Debt.findAll({
             where: { user, cost: costs.map(({id}) => id) },
         });
 
-        return response.status(200).json(debt);
+        return response.status(200).json(debts);
     } catch (error) {
         /* istanbul ignore next */
         return response.status(500).json({ message: error });

@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
 const Cost = require('../models/cost');
@@ -10,6 +11,29 @@ async function index(request, response) {
         const cost = await Cost.findAll({
             where: { trip, user },
         });
+
+        return response.status(200).json(cost);
+    } catch (error) {
+        /* istanbul ignore next */
+        return response.status(500).json({ message: error });
+    }
+};
+
+async function dailyCosts(request, response) {
+    const { trip, user, dtcost } = request.body;
+
+    try {
+        var startTime = new Date(dtcost);
+        startTime.setHours(0, 0, 0, 0);
+        var endTime = new Date(dtcost);
+        endTime.setHours(23, 59, 59, 599);
+
+        const cost = await Cost.findAll({ where: {
+            trip, user, dtcost: {
+                [Sequelize.Op.between]: 
+                    [startTime.toString(), endTime.toString()],
+            },
+        }});
 
         return response.status(200).json(cost);
     } catch (error) {
@@ -183,4 +207,4 @@ async function remove(request, response) {
     }
 };
 
-module.exports = { index, create, read, edit, remove };
+module.exports = { index, create, read, edit, remove, dailyCosts };
