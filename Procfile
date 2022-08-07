@@ -1,1 +1,1 @@
-web: yarn sequelize db:migrate:undo:all && yarn sequelize db:migrate && yarn sequelize db:seed:all && yarn start
+web: yarn start
