@@ -20,10 +20,10 @@ module.exports = {
       rejectUnauthorized: false
     }
   },
-  host: 'ec2-44-208-88-195.compute-1.amazonaws.com',
-  username: 'ldbetebjpibjaf',
-  password: 'c2e866ff31a0c353a39f23def05a24f912fff535e8ac9457b70c59a39aafb9cf',
-  database: 'db2sjok8onc9ug',
+  host: 'ec2-35-168-122-84.compute-1.amazonaws.com',
+  username: 'sovyfnywjvqpkv',
+  password: '209f1913c46a374136734e4d729452493b38ea02400b1040e1622939b08f097f',
+  database: 'd3bv6n743do4h8',
   // extra db config
 define: {
   timestamps: true,
