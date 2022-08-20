@@ -5,9 +5,9 @@ async function myDebts(request, response) {
     const { trip, user } = request.params;
 
     try {
-        const costs = await Cost.findAll({ where: { trip }});
         const debts = await Debt.findAll({
-            where: { user, cost: costs.map(({id}) => id) },
+            where: { user },
+            include: [{ model: Cost, where: { trip }}],
         });
 
         return response.status(200).json(debts);
@@ -21,9 +21,8 @@ async function myCredits(request, response) {
     const { trip, user } = request.params;
 
     try {
-        const costs = await Cost.findAll({ where: { user, trip }});
         const credits = await Debt.findAll({
-            where: { cost: costs.map(({id}) => id) },
+            include: [{ model: Cost, where: { user, trip }}],
         });
 
         return response.status(200).json(credits);
@@ -39,6 +38,7 @@ async function read(request, response) {
     try {
         const debt = await Debt.findOne({
             where: { cost, user },
+            include: [{ model: Cost }],
         });
 
         if (!debt) {

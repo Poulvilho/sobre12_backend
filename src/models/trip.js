@@ -16,12 +16,5 @@ const Trip = sequelize.define('Trip', {
 });
 
 Trip.belongsTo(User, { foreignKey: 'user' });
-Trip.belongsToMany(User, { 
-    through: 'guests', foreignKey: 'trip', as: 'guest',
-});
-
-User.belongsToMany(Trip, {
-    through: 'guests', foreignKey: 'user', as: 'sharedTrip',
-});
 
 module.exports = Trip;

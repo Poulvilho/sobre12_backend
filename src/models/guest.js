@@ -18,4 +18,11 @@ Guest.removeAttribute('id');
 Guest.belongsTo(User, { foreignKey: 'user' });
 Guest.belongsTo(Trip, { foreignKey: 'trip'});
 
+Trip.belongsToMany(User, { 
+    through: 'guests', foreignKey: 'trip', as: 'guest',
+});
+User.belongsToMany(Trip, {
+    through: 'guests', foreignKey: 'user', as: 'sharedTrip',
+});
+
 module.exports = Guest;
