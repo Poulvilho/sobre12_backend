@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
 const Subcategory = sequelize.define('Subcategory', {
     description: DataTypes.STRING,
     category: DataTypes.INTEGER,
-    trip: DataTypes.STRING
+    trip: DataTypes.STRING,
 });
 
 Subcategory.belongsTo(Trip, { foreignKey: 'trip' });

@@ -17,7 +17,7 @@ const Budget = sequelize.define('Budget', {
     trip: DataTypes.STRING
 });
 
-Budget.hasOne(Subcategory, {foreignKey: 'subcategory'});
+Budget.belongsTo(Subcategory, { foreignKey: 'subcategory' });
 Budget.belongsTo(Trip, { foreignKey: 'trip' });
 
 module.exports = Budget;

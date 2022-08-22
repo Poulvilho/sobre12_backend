@@ -19,7 +19,7 @@ const Cost = sequelize.define('Cost', {
     user: DataTypes.STRING,
 });
 
-Cost.belongsTo(Subcategory, {foreignKey: 'subcategory'});
+Cost.belongsTo(Subcategory, { foreignKey: 'subcategory' });
 Cost.belongsTo(Trip, { foreignKey: 'trip' });
 Cost.belongsTo(User, { foreignKey: 'user' });
 
