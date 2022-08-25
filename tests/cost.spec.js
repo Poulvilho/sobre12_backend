@@ -19,6 +19,24 @@ describe('Cost tests', () => {
           dtcost: new Date(),
           trip: seedTripId,
           user: seedUserId,
+          participants: [],
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('id');
+  });
+
+  it('Teste Criação com participante correto', async () => {
+    const response = await request(app)
+      .post('/api/cost/create')
+      .send({
+          description: 'Custo de teste com participante',
+          value: 0.0,
+          category: 1,
+          subcategory: null,
+          dtcost: new Date(),
+          trip: seedTripId,
+          user: seedUserId,
           participants: [seedDebtUserId],
       });
 
@@ -81,6 +99,24 @@ describe('Cost tests', () => {
   });
 
   it('Teste Edita correto', async () => {
+    const response = await request(app)
+      .put(`/api/cost/${idCreatedCost}`)
+      .send({
+        description: 'Custo de teste Atualizado',
+        value: 0.0,
+        category: 1,
+        subcategory: null,
+        dtcost: new Date(),
+        trip: seedTripId,
+        user: seedUserId,
+        participants: [],
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body.data).toBe(1);
+  });
+
+  it('Teste Edita com participante correto', async () => {
     const response = await request(app)
       .put(`/api/cost/${idCreatedCost}`)
       .send({

@@ -1,5 +1,6 @@
 const Cost = require('../models/cost');
 const Debt = require('../models/debt');
+const User = require('../models/user');
 
 async function myDebts(request, response) {
     const { trip, user } = request.params;
@@ -7,7 +8,11 @@ async function myDebts(request, response) {
     try {
         const debts = await Debt.findAll({
             where: { user },
-            include: [{ model: Cost, where: { trip }}],
+            include: [{
+                model: Cost, where: { trip }
+            }, {
+                model: User
+            }],
         });
 
         return response.status(200).json(debts);
@@ -22,7 +27,11 @@ async function myCredits(request, response) {
 
     try {
         const credits = await Debt.findAll({
-            include: [{ model: Cost, where: { user, trip }}],
+            include: [{
+                model: Cost, where: { trip }
+            }, {
+                model: User
+            }],
         });
 
         return response.status(200).json(credits);
@@ -38,7 +47,7 @@ async function read(request, response) {
     try {
         const debt = await Debt.findOne({
             where: { cost, user },
-            include: [{ model: Cost }],
+            include: [{ model: Cost }, { model: User }],
         });
 
         if (!debt) {
