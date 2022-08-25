@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('../config/database');
 
 const User = require('./user');
@@ -9,8 +9,9 @@ const sequelize = new Sequelize(
 );
 
 const Guest = sequelize.define('guests', {
-    user: DataTypes.STRING,
-    trip: DataTypes.STRING,
+    user: Sequelize.STRING,
+    trip: Sequelize.STRING,
+    role: Sequelize.INTEGER,
 });
 
 Guest.removeAttribute('id');

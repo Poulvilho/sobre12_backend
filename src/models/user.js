@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('../config/database');
 
 const sequelize = new Sequelize(
@@ -6,10 +6,10 @@ const sequelize = new Sequelize(
 );
 
 const User = sequelize.define('User', {
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    validated: DataTypes.BOOLEAN,
+    name: Sequelize.STRING,
+    email: Sequelize.STRING,
+    password: Sequelize.STRING,
+    validated: Sequelize.BOOLEAN,
 }, {
     defaultScope: { attributes: { exclude: [ 'password' ] } },      
 });

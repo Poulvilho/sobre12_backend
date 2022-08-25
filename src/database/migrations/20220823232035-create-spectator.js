@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('guests', {
+    await queryInterface.createTable('spectators', {
       user: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -23,10 +23,15 @@ module.exports = {
           key: 'id'
         }
       },
-      role: {
+      spectated: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        default: 1,
+        type: Sequelize.STRING,
+        references: {
+          model: {
+            tableName: 'users'
+          },
+          key: 'id'
+        }
       },
       created_at: {
         allowNull: false,
@@ -42,7 +47,7 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('guests', {
+    await queryInterface.dropTable('spectators', {
       cascade: true,
     });
   }

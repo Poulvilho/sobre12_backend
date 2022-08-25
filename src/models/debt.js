@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('../config/database');
 
 const User = require('./user');
@@ -9,10 +9,10 @@ const sequelize = new Sequelize(
 );
 
 const Debt = sequelize.define('debts', {
-    user: DataTypes.STRING,
-    cost: DataTypes.STRING,
-    value: DataTypes.DOUBLE,
-    settled: DataTypes.BOOLEAN,
+    user: Sequelize.STRING,
+    cost: Sequelize.STRING,
+    value: Sequelize.DOUBLE,
+    settled: Sequelize.BOOLEAN,
 });
 
 Debt.removeAttribute('id');

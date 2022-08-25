@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('../config/database');
 
 const Trip = require('./trip');
@@ -8,9 +8,9 @@ const sequelize = new Sequelize(
 );
 
 const Subcategory = sequelize.define('Subcategory', {
-    description: DataTypes.STRING,
-    category: DataTypes.INTEGER,
-    trip: DataTypes.STRING,
+    description: Sequelize.STRING,
+    category: Sequelize.INTEGER,
+    trip: Sequelize.STRING,
 });
 
 Subcategory.belongsTo(Trip, { foreignKey: 'trip' });

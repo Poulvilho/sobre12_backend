@@ -34,9 +34,37 @@ async function create(request, response) {
         const guest = await Guest.create({
             user: user.id,
             trip,
+            role: 1,
         });
 
         return response.status(200).json(guest);
+    } catch (error) {
+        /* istanbul ignore next */
+        return response.status(500).json({ message: error });
+    }
+};
+
+async function edit(request, response) {
+    const { trip, user } = request.params;
+    const { role } = request.body;
+
+    try {
+        const rowsUpdated = await Guest.update({
+            role,
+        }, {
+            where: { user, trip },
+        });
+
+        if (rowsUpdated[0] === 0) {
+            return response.status(404).json({
+                message: 'Participante não encontrado!',
+            });
+        }
+
+        return response.status(200).json({
+            data: rowsUpdated[0],
+            message: 'Participante atualizado com sucesso!',
+        });
     } catch (error) {
         /* istanbul ignore next */
         return response.status(500).json({ message: error });
@@ -67,4 +95,4 @@ async function remove(request, response) {
     }
 };
 
-module.exports = { index, create, remove };
+module.exports = { index, create, edit, remove };

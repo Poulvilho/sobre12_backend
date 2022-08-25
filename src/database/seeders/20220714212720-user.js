@@ -28,6 +28,15 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        id: 'aea297fb-32f6-4263-a735-84719fb6de12',
+        name: 'Usuário Mockado 2',
+        email: 'mockado2@gmail.com',
+        password: '#Mockado1234',
+        validated: true,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ], {});
   },
 

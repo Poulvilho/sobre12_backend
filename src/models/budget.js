@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('../config/database');
 
 const Trip = require('./trip');
@@ -9,12 +9,12 @@ const sequelize = new Sequelize(
 );
 
 const Budget = sequelize.define('Budget', {
-    description: DataTypes.STRING,
-    value: DataTypes.DOUBLE,
-    category: DataTypes.INTEGER,
-    subcategory: DataTypes.STRING,
-    dtbudget: DataTypes.DATE,
-    trip: DataTypes.STRING
+    description: Sequelize.STRING,
+    value: Sequelize.DOUBLE,
+    category: Sequelize.INTEGER,
+    subcategory: Sequelize.STRING,
+    dtbudget: Sequelize.DATE,
+    trip: Sequelize.STRING
 });
 
 Budget.belongsTo(Subcategory, { foreignKey: 'subcategory' });

@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const config = require('../config/database');
 
 const User = require('./user');
@@ -8,11 +8,11 @@ const sequelize = new Sequelize(
 );
 
 const Trip = sequelize.define('Trip', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    dtstart: DataTypes.DATE,
-    dtend: DataTypes.DATE,
-    user: DataTypes.STRING,
+    name: Sequelize.STRING,
+    description: Sequelize.STRING,
+    dtstart: Sequelize.DATE,
+    dtend: Sequelize.DATE,
+    user: Sequelize.STRING,
 });
 
 Trip.belongsTo(User, { foreignKey: 'user' });
