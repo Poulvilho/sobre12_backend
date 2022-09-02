@@ -13,6 +13,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('guests', null, {});
+    await queryInterface.bulkDelete('debts', null, {});
   }
 };

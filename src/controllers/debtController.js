@@ -1,5 +1,6 @@
 const Cost = require('../models/cost');
 const Debt = require('../models/debt');
+const Subcategory = require('../models/subcategory');
 const User = require('../models/user');
 
 async function myDebts(request, response) {
@@ -9,9 +10,12 @@ async function myDebts(request, response) {
         const debts = await Debt.findAll({
             where: { user },
             include: [{
-                model: Cost, where: { trip }
-            }, {
-                model: User
+                model: Cost,
+                include: [
+                    { model: User, required: true }, { model: Subcategory }
+                ],
+                where: { trip },
+                required: true,
             }],
         });
 
@@ -28,9 +32,13 @@ async function myCredits(request, response) {
     try {
         const credits = await Debt.findAll({
             include: [{
-                model: Cost, where: { trip }
+                model: Cost,
+                include: [{ model: Subcategory }],
+                where: { trip, user },
+                required: true,
             }, {
-                model: User
+                model: User,
+                required: true,
             }],
         });
 
@@ -47,7 +55,16 @@ async function read(request, response) {
     try {
         const debt = await Debt.findOne({
             where: { cost, user },
-            include: [{ model: Cost }, { model: User }],
+            include: [{
+                model: Cost,
+                include: [
+                    { model: User, required: true }, { model: Subcategory }
+                ],
+                required: true,
+            }, {
+                model: User,
+                required: true,
+            }],
         });
 
         if (!debt) {

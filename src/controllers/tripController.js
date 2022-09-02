@@ -3,20 +3,22 @@ const { v4: uuidv4 } = require('uuid');
 
 const Trip = require('../models/trip');
 const Guest = require('../models/guest');
+const Spectator = require('../models/spectator');
 
 async function index(request, response) {
     const { user } = request.params;
     
     try {
-        const sharedTrips = await Guest.findAll({
-            where: { user },
-        });
-
         const trips = await Trip.findAll({
             where: Sequelize.or(
                 { user },
-                { id: sharedTrips.map(({ trip }) => trip) },
+                { '$guests.user$': user },
+                { '$spectators.user$': user },
             ),
+            include: [
+                { model: Guest, required: false },
+                { model: Spectator, required: false }
+            ],
         });
 
         return response.status(200).json(trips);

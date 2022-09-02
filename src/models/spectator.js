@@ -16,15 +16,9 @@ const Spectator = sequelize.define('spectators', {
 
 Spectator.removeAttribute('id');
 
-Spectator.belongsTo(User, { foreignKey: 'user' });
+Spectator.belongsTo(User, { foreignKey: 'user', as: 'spectator' });
 Spectator.belongsTo(User, { foreignKey: 'spectated' });
-Spectator.belongsTo(Trip, { foreignKey: 'trip'});
-
-Trip.belongsToMany(User, { 
-    through: 'spectators', foreignKey: 'trip', as: 'spectator',
-});
-User.belongsToMany(Trip, {
-    through: 'spectators', foreignKey: 'user', as: 'spectatedTrip',
-});
+Spectator.belongsTo(Trip, { foreignKey: 'trip' });
+Trip.hasMany(Spectator, { foreignKey: 'trip' });
 
 module.exports = Spectator;

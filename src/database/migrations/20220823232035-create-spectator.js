@@ -5,6 +5,7 @@ module.exports = {
     await queryInterface.createTable('spectators', {
       user: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: {
@@ -15,6 +16,7 @@ module.exports = {
       },
       trip: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: {
@@ -25,6 +27,7 @@ module.exports = {
       },
       spectated: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: {

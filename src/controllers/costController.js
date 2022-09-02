@@ -2,7 +2,9 @@ const { Sequelize } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
 const Cost = require('../models/cost');
+const User = require('../models/user');
 const Debt = require('../models/debt');
+const Subcategory = require('../models/subcategory');
 
 async function index(request, response) {
     const { trip, user } = request.params;
@@ -10,6 +12,7 @@ async function index(request, response) {
     try {
         const cost = await Cost.findAll({
             where: { trip, user },
+            include: [{ model: Subcategory }],
         });
 
         return response.status(200).json(cost);
@@ -28,12 +31,13 @@ async function dailyCosts(request, response) {
         var endTime = new Date(dtcost);
         endTime.setHours(23, 59, 59, 599);
 
-        const cost = await Cost.findAll({ where: {
-            trip, user, dtcost: {
+        const cost = await Cost.findAll({
+            where: { trip, user, dtcost: {
                 [Sequelize.Op.between]: 
                     [startTime.toString(), endTime.toString()],
-            },
-        }});
+            }},
+            include: [{ model: Subcategory }],
+        });
 
         return response.status(200).json(cost);
     } catch (error) {
@@ -89,7 +93,13 @@ async function read(request, response) {
     const { id } = request.params;
 
     try {
-        const cost = await Cost.findByPk(id);
+        const cost = await Cost.findByPk(id, {
+            include: [
+                { model: User, required: true },
+                { model: Debt, required: false },
+                { model: Subcategory, required: false },
+            ],
+        });
 
         if (!cost) {
             return response.status(404).json({
@@ -97,11 +107,9 @@ async function read(request, response) {
             });
         }
 
-        const debts = await Debt.findAll({
-            where: { cost: cost.id },
-        });
+        const debts = await Debt.findAll({ where: { cost: cost.id }});
 
-        return response.status(200).json({ cost: cost, debts: debts });
+        return response.status(200).json({ cost, debts });
     } catch (error) {
         /* istanbul ignore next */
         return response.status(500).json({ message: error });
@@ -115,7 +123,9 @@ async function edit(request, response) {
     } = request.body;
 
     try {
-        const cost = await Cost.findByPk(id);
+        const cost = await Cost.findByPk(id, {
+            include: [{ model: Debt }],
+        });
         
         if (!cost) {
             return response.status(404).json({
@@ -171,7 +181,9 @@ async function remove(request, response) {
     const { id } = request.params;
 
     try {
-        const cost = await Cost.findByPk(id);
+        const cost = await Cost.findByPk(id, {
+            include: [{ model: Debt }],
+        });
         
         if (!cost) {
             return response.status(404).json({

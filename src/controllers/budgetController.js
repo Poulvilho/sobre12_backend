@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
 const Budget = require('../models/budget');
+const Subcategory = require('../models/subcategory');
 
 async function index(request, response) {
     const { trip } = request.params;
@@ -9,6 +10,7 @@ async function index(request, response) {
     try {
         const budget = await Budget.findAll({
             where: { trip },
+            include: [{ model: Subcategory }],
         });
 
         return response.status(200).json(budget);
@@ -31,7 +33,8 @@ async function dailyBudget(request, response) {
             where: { trip, dtbudget: {
                 [Sequelize.Op.between]: 
                     [startTime.toString(), endTime.toString()],
-            }, },
+            }},
+            include: [{ model: Subcategory }],
         });
 
         return response.status(200).json(budget);
@@ -61,7 +64,9 @@ async function read(request, response) {
     const { id } = request.params;
 
     try {
-        const budget = await Budget.findByPk(id);
+        const budget = await Budget.findByPk(id, {
+            include: [{ model: Subcategory }],
+        });
 
         if (!budget) {
             return response.status(404).json({

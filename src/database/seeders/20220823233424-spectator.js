@@ -12,6 +12,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('spectates', null, {});
+    await queryInterface.bulkDelete('spectators', null, {});
   }
 };

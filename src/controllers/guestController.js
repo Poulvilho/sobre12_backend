@@ -7,7 +7,7 @@ async function index(request, response) {
     try {
         const guests = await Guest.findAll({
             where: { trip },
-            include: [{ model: User }],
+            include: [{ model: User, required: true }],
         });
 
         return response.status(200).json(guests);

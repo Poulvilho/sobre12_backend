@@ -18,13 +18,8 @@ const Debt = sequelize.define('debts', {
 Debt.removeAttribute('id');
 
 Debt.belongsTo(User, { foreignKey: 'user' });
+User.hasMany(Debt, { foreignKey: 'user' });
 Debt.belongsTo(Cost, { foreignKey: 'cost' });
-
-User.belongsToMany(Cost, { 
-    through: 'debts', foreignKey: 'user',
-});
-Cost.belongsToMany(User, {
-    through: 'debts', foreignKey: 'cost',
-});
+Cost.hasMany(Debt, { foreignKey: 'cost' });
 
 module.exports = Debt;

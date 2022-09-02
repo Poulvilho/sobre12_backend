@@ -5,6 +5,7 @@ module.exports = {
     await queryInterface.createTable('debts', {
       user: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: {
@@ -15,6 +16,7 @@ module.exports = {
       },
       cost: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: {

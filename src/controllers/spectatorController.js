@@ -7,7 +7,9 @@ async function index(request, response) {
     try {
         const spectators = await Spectator.findAll({
             where: { trip, spectated },
-            include: [{ model: User }],
+            include: [{
+                model: User, as: 'spectator',
+            }],
         });
 
         return response.status(200).json(spectators);
