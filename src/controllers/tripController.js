@@ -10,18 +10,28 @@ async function index(request, response) {
     
     try {
         const trips = await Trip.findAll({
-            where: Sequelize.or(
-                { user },
-                { '$guests.user$': user },
-                { '$spectators.user$': user },
-            ),
+            where: { user },
+        });
+        
+        const sharedTrips = await Trip.findAll({
+            where: { '$guests.user$': user },
             include: [
-                { model: Guest, required: false },
-                { model: Spectator, required: false }
+                { model: Guest, required: true },
             ],
         });
+        
+        const spectatedTrips = await Trip.findAll({
+            include: [{
+                model: Guest, required: true
+            }, {
+                model: Spectator, required: true,
+                where: { user },
+            }],
+        });
 
-        return response.status(200).json(trips);
+        const allTrips = [...trips, ...sharedTrips, ...spectatedTrips];
+
+        return response.status(200).json(allTrips);
     } catch (error) {
         /* istanbul ignore next */
         return response.status(500).json({ message: error });

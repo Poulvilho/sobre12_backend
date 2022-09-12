@@ -199,7 +199,7 @@ async function remove(request, response) {
             return response.status(406).json({
                 debts,
                 message: 'Custo possui dívidas já pagas e não pode ser deletado!',
-            })
+            });
         }
 
         await Debt.destroy({
