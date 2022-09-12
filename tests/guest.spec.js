@@ -16,7 +16,7 @@ describe('Guest tests', () => {
     const response = await request(app)
       .post('/api/guest/create')
       .send({
-          email: 'mockadoErrado@gmail.com',
+          email: 'respauloErrado@gmail.com',
           trip: seedTripId,
       });
 
@@ -28,7 +28,7 @@ describe('Guest tests', () => {
     const response = await request(app)
       .post('/api/guest/create')
       .send({
-          email: 'mockado@gmail.com',
+          email: 'respaulo@gmail.com',
           trip: seedTripId,
       });
 

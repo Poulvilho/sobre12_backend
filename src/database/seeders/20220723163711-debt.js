@@ -6,7 +6,7 @@ module.exports = {
         cost: 'f00c1ee9-078b-4b61-8e3f-a23d68da4312',
         value: 0.0,
         settled: false,
-        created_at: new Date(),
+        created_at: new Date(2022, 09, 24),
         updated_at: new Date(),
       },
     ], {});

@@ -21,7 +21,7 @@ describe('Spectator tests', () => {
     const response = await request(app)
       .post('/api/spectator/create')
       .send({
-          email: 'mockado2Errado@gmail.com',
+          email: 'resmotaErrado@gmail.com',
           trip: seedTripId,
       });
 
@@ -33,7 +33,7 @@ describe('Spectator tests', () => {
     const response = await request(app)
       .post('/api/spectator/create')
       .send({
-          email: 'mockado2@gmail.com',
+          email: 'resmota@gmail.com',
           trip: seedTripId,
           spectated: seedSpectatedId,
       });

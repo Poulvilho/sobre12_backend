@@ -3,6 +3,7 @@ const app = require('../src/app');
 
 const seedUserId = '79ce51ad-1e5a-43b9-b71f-56cfe18d2253';
 const seedGuestId = '12c06dd6-187a-4a50-927f-5d08b367ee89';
+const seedSpectatorId = '841de1bf-f49c-455b-9f30-ce79fb8f2306'
 
 var idCreatedTrip = '';
 
@@ -17,6 +18,13 @@ describe('Trip tests', () => {
   it('Teste Index convidado correto', async () => {
     const response = await request(app)
       .post(`/api/trip/index/${seedGuestId}`);
+
+    expect(response.status).toBe(200);
+  });
+
+  it('Teste Index espectador correto', async () => {
+    const response = await request(app)
+      .post(`/api/trip/index/${seedSpectatorId}`);
 
     expect(response.status).toBe(200);
   });
