@@ -131,6 +131,25 @@ async function forgotPassword(request, response) {
     }
 };
 
+async function read(request, response) {
+    const { id } = request.params;
+
+    try {
+        const user = await User.findByPk(id);
+
+        if (!user) {
+            return response.status(404).json({
+                message: 'Usuário não encontrado!',
+            });
+        }
+        
+        return response.status(200).json(user);
+    } catch (error) {
+        /* istanbul ignore next */
+        return response.status(500).json({ message: error });
+    }
+};
+
 async function edit(request, response) {
     const { id } = request.params;
     const { name, email, oldPassword, password } = request.body;
@@ -182,5 +201,6 @@ async function remove(request, response) {
 };
 
 module.exports = {
-    index, register, emailValidation, login, forgotPassword, edit, remove,
+    index, register, emailValidation, login,
+    forgotPassword, read, edit, remove,
 };
