@@ -1,5 +1,6 @@
 const Guest = require('../models/guest');
 const User = require('../models/user');
+const Trip = require('../models/trip');
 
 async function index(request, response) {
     const { trip } = request.params;
@@ -10,7 +11,13 @@ async function index(request, response) {
             include: [{ model: User, required: true }],
         });
 
-        return response.status(200).json(guests);
+        const guide = await Trip.findByPk(trip, {
+            include: [{ model: User, required: true }],
+        });
+
+        const allGuests = [...guests, guide];
+
+        return response.status(200).json(allGuests);
     } catch (error) {
         /* istanbul ignore next */
         return response.status(500).json({ message: error });
