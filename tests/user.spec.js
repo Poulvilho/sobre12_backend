@@ -84,6 +84,22 @@ describe('User tests', () => {
     idCreatedUser = response.body.id;
   });
   
+  it('Teste Leitura errado', async () => {
+    const response = await request(app)
+      .get(`/api/user/${idCreatedUser}Errado`);
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Usuário não encontrado!');
+  });
+  
+  it('Teste Leitura correto', async () => {
+    const response = await request(app)
+      .get(`/api/user/${idCreatedUser}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('id');
+  });
+  
   it('Teste Esqueci minha senha errado', async () => {
     const response = await request(app)
       .post('/api/user/forgotPassword')
